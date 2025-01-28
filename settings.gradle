@@ -1,0 +1,5 @@
+rootProject.name = 'BiblioSpring'
+include ':BiblioSpring.web'
+include ':BiblioSpring.application'
+include ':BiblioSpring.domain'
+include ':BiblioSpring.infrastructure'
