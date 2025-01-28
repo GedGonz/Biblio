@@ -37,14 +37,6 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults()) //habilita la autenticacion basica(usuario y contraseñá)
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(http->{
-                    //configura los endpoints como publicos
-                    http.requestMatchers(HttpMethod.GET,"/saludo/hola").permitAll();
-                    //configura los endpoints con autenticación
-                    http.requestMatchers(HttpMethod.GET,"/saludo/hola/seguro").hasAuthority("READ");
-                    //configura los demás endpoint no especificados y que estén autenticados
-                    http.anyRequest().denyAll();
-                })
                 .build();
     }
 
