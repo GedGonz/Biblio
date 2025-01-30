@@ -42,6 +42,7 @@ subprojects {
 		developmentOnly 'org.springframework.boot:spring-boot-devtools'
 		annotationProcessor 'org.projectlombok:lombok'
 		testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
 	}
 
 	tasks.named('test') {

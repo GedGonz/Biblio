@@ -19,11 +19,17 @@ repositories {
 
 dependencies {
 
+	//project
+	implementation project(':BiblioSpring.infrastructure')
+	implementation project(':BiblioSpring.domain')
+
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+
 
 }
 

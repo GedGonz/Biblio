@@ -1,5 +1,7 @@
 package com.biblio.web.controller;
 
+import com.biblio.domain.model.UserDto;
+import com.biblio.domain.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +13,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/saludo")
 public class HomeController {
 
+    final private UserService userService;
+    public HomeController(UserService userService){
+        this.userService=userService;
+    }
     // se autoriza este endpoint
     @PreAuthorize("permitAll()")
     @GetMapping("/hola")
     @ResponseBody
     public String hello(){
-        return "HOLA DESDE SPRING NO SEGURO :(";
+        var result=userService.getAll();
+        return "HOLA DESDE SPRING NO SEGURO :( --> "+result.stream().map(UserDto::getUsername).reduce("",(acc, user)->acc+user+", ");
     }
     // se autoriza este endpoint cuando tenga la autorización CREATE
     @PreAuthorize("hasAuthority('CREATE')")
