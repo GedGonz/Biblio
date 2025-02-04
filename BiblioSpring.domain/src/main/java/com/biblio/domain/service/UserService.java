@@ -17,6 +17,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public UserDto save(UserDto userDto){ return userRepository.save(userDto);}
+
     public void saveAll(List<UserDto> userDtos) {
         userRepository.saveAll(userDtos);
     }

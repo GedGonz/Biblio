@@ -4,9 +4,11 @@ import com.biblio.domain.model.PermissionDto;
 import com.biblio.domain.model.RoleDto;
 import com.biblio.domain.model.UserDto;
 import com.biblio.domain.repository.UserRepository;
+import com.biblio.infrastructure.JpaEntities.JpaRoleCrudRepository;
 import com.biblio.infrastructure.entity.Permission;
 import com.biblio.infrastructure.entity.Role;
 import com.biblio.infrastructure.entity.User;
+import com.biblio.infrastructure.JpaEntities.JpaUserCrudRepository;
 import com.biblio.infrastructure.mapper.PermissionMapper;
 import com.biblio.infrastructure.mapper.RoleMapper;
 import com.biblio.infrastructure.mapper.UserMapper;
@@ -18,17 +20,28 @@ import java.util.*;
 public class UserRepositorio implements UserRepository {
 
     final private JpaUserCrudRepository jpaUserCrudRepository;
+    final private JpaRoleCrudRepository jpaRoleCrudRepository;
     final private UserMapper userMapper;
     final private RoleMapper roleMapper;
     final private PermissionMapper permissionMapper;
 
-    public UserRepositorio(JpaUserCrudRepository jpaUserCrudRepository, UserMapper userMapper, RoleMapper roleMapper, PermissionMapper permissionMapper) {
+    public UserRepositorio(JpaUserCrudRepository jpaUserCrudRepository,JpaRoleCrudRepository jpaRoleCrudRepository, UserMapper userMapper, RoleMapper roleMapper, PermissionMapper permissionMapper) {
         this.jpaUserCrudRepository = jpaUserCrudRepository;
+        this.jpaRoleCrudRepository=jpaRoleCrudRepository;
         this.userMapper = userMapper;
         this.roleMapper = roleMapper;
         this.permissionMapper = permissionMapper;
     }
 
+
+    @Override
+    public UserDto save(UserDto userdto) {
+       User _user =userMapper.userDtoToUser(userdto);
+
+        Set<Role> roles = new HashSet<>(jpaRoleCrudRepository.findRoleByRoleEnumIn(userdto.getRoles().stream().map(role -> role.getRoleEnum().name()).toList()));
+        _user.setRoles(roles);
+       return userMapper.userToUserDto(jpaUserCrudRepository.save(_user));
+    }
 
     @Override
     public void saveAll(List<UserDto> userDtos) {

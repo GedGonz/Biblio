@@ -1,4 +1,4 @@
-package com.biblio.infrastructure.adapter;
+package com.biblio.infrastructure.JpaEntities;
 
 import com.biblio.infrastructure.entity.User;
 import org.springframework.data.repository.CrudRepository;

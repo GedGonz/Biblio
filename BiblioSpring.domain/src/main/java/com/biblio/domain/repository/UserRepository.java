@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface UserRepository {
 
+    UserDto save(UserDto userdto);
     void saveAll(List<UserDto> userDtos);
     List<UserDto> getAll();
     UserDto getByUsername(String username) throws Exception;
