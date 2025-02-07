@@ -1,7 +1,7 @@
 package com.biblio.web.controller;
 
-import com.biblio.domain.model.UserDto;
-import com.biblio.domain.service.UserService;
+import com.biblio.domain.model.security.UserDto;
+import com.biblio.domain.service.security.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/saludo")
 public class HomeController {
 
-    final private UserService userService;
+    private final UserService userService;
     public HomeController(UserService userService){
         this.userService=userService;
     }

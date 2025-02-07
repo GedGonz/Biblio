@@ -1,6 +1,6 @@
-package com.biblio.infrastructure.JpaEntities;
+package com.biblio.infrastructure.jpaentity.security;
 
-import com.biblio.infrastructure.entity.Role;
+import com.biblio.infrastructure.entity.security.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

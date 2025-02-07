@@ -1,9 +1,9 @@
 package com.biblio.web.security;
 
-import com.biblio.domain.model.RoleDto;
-import com.biblio.domain.model.UserDto;
-import com.biblio.domain.repository.RoleRepository;
-import com.biblio.domain.service.UserService;
+import com.biblio.domain.model.security.RoleDto;
+import com.biblio.domain.model.security.UserDto;
+import com.biblio.domain.repository.security.RoleRepository;
+import com.biblio.domain.service.security.UserService;
 import com.biblio.web.model.AuthCreateUser;
 import com.biblio.web.model.AuthLoginRequest;
 import com.biblio.web.model.AuthResponse;
@@ -52,13 +52,13 @@ public class UserDetailService implements UserDetailsService {
 
             UserDto user = userService.getByUsername(username);
 
-            user.getRoles().forEach(roleDto -> {
-                authorityList.add(new SimpleGrantedAuthority("ROLE_"+roleDto.getRoleEnum().name()));
-            });
+            user.getRoles().forEach(roleDto ->
+                authorityList.add(new SimpleGrantedAuthority("ROLE_"+roleDto.getRoleEnum().name()))
+            );
 
-            user.getRoles().stream().flatMap(role->role.getPermissions().stream()).forEach(permissionDto -> {
-                authorityList.add(new SimpleGrantedAuthority(permissionDto.getName()));
-            });
+            user.getRoles().stream().flatMap(role->role.getPermissions().stream()).forEach(permissionDto ->
+                authorityList.add(new SimpleGrantedAuthority(permissionDto.getName()))
+            );
 
             return new User(user.getUsername(),
                     user.getPassword(),
@@ -67,8 +67,8 @@ public class UserDetailService implements UserDetailsService {
                     user.isCredentialNoExpired(),
                     user.isAccountNoLocked(),authorityList);
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (UsernameNotFoundException e) {
+            throw new UsernameNotFoundException("User not found!");
         }
     }
 
@@ -122,13 +122,13 @@ public class UserDetailService implements UserDetailsService {
 
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
 
-        userCreated.getRoles().forEach(roleDto -> {
-            authorityList.add(new SimpleGrantedAuthority("ROLE_"+roleDto.getRoleEnum().name()));
-        });
+        userCreated.getRoles().forEach(roleDto ->
+            authorityList.add(new SimpleGrantedAuthority("ROLE_"+roleDto.getRoleEnum().name()))
+        );
 
-        userCreated.getRoles().stream().flatMap(role->role.getPermissions().stream()).forEach(permissionDto -> {
-            authorityList.add(new SimpleGrantedAuthority(permissionDto.getName()));
-        });
+        userCreated.getRoles().stream().flatMap(role->role.getPermissions().stream()).forEach(permissionDto ->
+            authorityList.add(new SimpleGrantedAuthority(permissionDto.getName()))
+        );
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(username,null,authorityList);
 

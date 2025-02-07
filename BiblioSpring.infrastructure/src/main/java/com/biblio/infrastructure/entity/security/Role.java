@@ -1,10 +1,9 @@
-package com.biblio.infrastructure.entity;
+package com.biblio.infrastructure.entity.security;
 
 import com.biblio.infrastructure.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Setter

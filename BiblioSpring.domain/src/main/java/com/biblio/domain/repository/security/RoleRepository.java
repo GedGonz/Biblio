@@ -1,6 +1,6 @@
-package com.biblio.domain.repository;
+package com.biblio.domain.repository.security;
 
-import com.biblio.domain.model.RoleDto;
+import com.biblio.domain.model.security.RoleDto;
 
 import java.util.List;
 

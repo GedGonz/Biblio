@@ -3,11 +3,9 @@ package com.biblio.web.security.config;
 import com.biblio.web.security.UserDetailService;
 import com.biblio.web.security.config.filter.JwtTokenValidator;
 import com.biblio.web.security.util.JwtUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -28,8 +26,11 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
+    public SecurityConfig(JwtUtils jwtUtils){
+        this.jwtUtils=jwtUtils;
+    }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -55,25 +56,6 @@ public class SecurityConfig {
 
         return provider;
     }
-
-
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//
-//        List<UserDetails> userDetails = new ArrayList<>();
-//        userDetails.add(User.withUsername("gedgonz")
-//                .password("1234")
-//                .roles("ADMIN")
-//                .authorities("READ","CREATE")
-//                .build());
-//
-//        userDetails.add(User.withUsername("hels")
-//                .password("1234")
-//                .roles("USER")
-//                .authorities("READ")
-//                .build());
-//        return new InMemoryUserDetailsManager(userDetails);
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){

@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 //Configuración necesaria para que Spring Data JPA pueda encontrar los repositorios y las entidades
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.biblio.infrastructure.adapter","com.biblio.infrastructure.JpaEntities"})
+@EnableJpaRepositories(basePackages = {"com.biblio.infrastructure.adapter","com.biblio.infrastructure.jpaentity"})
 @EntityScan(basePackages = "com.biblio.infrastructure.entity")
 
-public class config {
+public class Config {
 }

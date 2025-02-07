@@ -1,4 +1,4 @@
-package com.biblio.domain.model;
+package com.biblio.domain.model.security;
 
 import com.biblio.domain.enums.RoleEnum;
 import lombok.Builder;

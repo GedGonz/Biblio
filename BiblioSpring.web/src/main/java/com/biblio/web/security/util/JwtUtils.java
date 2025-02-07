@@ -22,20 +22,20 @@ public class JwtUtils {
     @Value("${security.jwt.secret}")
     private String privateKey;
     @Value("${security.jwt.user.generator}")
-    private String UserGenerator;
+    private String userGenerator;
 
 
     public String createToken(Authentication authentication){
 
         Algorithm algorithm = Algorithm.HMAC256(privateKey);
-        String Username = authentication.getPrincipal().toString();
-        String Authorities =  authentication.getAuthorities().stream().
+        String username = authentication.getPrincipal().toString();
+        String authorities =  authentication.getAuthorities().stream().
                 map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
 
         return JWT.create().
-                withIssuer(UserGenerator).
-                withSubject(Username).
-                withClaim("authorities", Authorities).
+                withIssuer(userGenerator).
+                withSubject(username).
+                withClaim("authorities", authorities).
                 withIssuedAt(new Date()).
                 withExpiresAt(new Date(System.currentTimeMillis() + 1800000)).
                 withJWTId(UUID.randomUUID().toString()).
@@ -46,7 +46,7 @@ public class JwtUtils {
     public DecodedJWT validateToken(String token){
         try {
             Algorithm algorithm = Algorithm.HMAC256(privateKey);
-            JWTVerifier verifier = JWT.require(algorithm).withIssuer(UserGenerator).build();
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer(userGenerator).build();
             return verifier.verify(token);
         } catch (JWTVerificationException e) {
             throw  new JWTVerificationException("Invalid token");

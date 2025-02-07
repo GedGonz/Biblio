@@ -1,7 +1,7 @@
 package com.biblio.infrastructure.mapper;
 
-import com.biblio.domain.model.PermissionDto;
-import com.biblio.infrastructure.entity.Permission;
+import com.biblio.domain.model.security.PermissionDto;
+import com.biblio.infrastructure.entity.security.Permission;
 import org.mapstruct.Mapper;
 
 import java.util.List;

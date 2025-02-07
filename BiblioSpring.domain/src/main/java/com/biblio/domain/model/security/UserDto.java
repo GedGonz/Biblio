@@ -1,4 +1,4 @@
-package com.biblio.domain.model;
+package com.biblio.domain.model.security;
 
 import lombok.Builder;
 import lombok.Data;

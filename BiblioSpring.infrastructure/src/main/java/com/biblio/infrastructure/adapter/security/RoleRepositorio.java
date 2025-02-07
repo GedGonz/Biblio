@@ -1,8 +1,8 @@
-package com.biblio.infrastructure.adapter;
+package com.biblio.infrastructure.adapter.security;
 
-import com.biblio.domain.model.RoleDto;
-import com.biblio.domain.repository.RoleRepository;
-import com.biblio.infrastructure.JpaEntities.JpaRoleCrudRepository;
+import com.biblio.domain.model.security.RoleDto;
+import com.biblio.domain.repository.security.RoleRepository;
+import com.biblio.infrastructure.jpaentity.security.JpaRoleCrudRepository;
 import com.biblio.infrastructure.mapper.RoleMapper;
 import org.springframework.stereotype.Repository;
 

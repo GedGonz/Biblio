@@ -1,6 +1,6 @@
-package com.biblio.infrastructure.JpaEntities;
+package com.biblio.infrastructure.jpaentity.security;
 
-import com.biblio.infrastructure.entity.User;
+import com.biblio.infrastructure.entity.security.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

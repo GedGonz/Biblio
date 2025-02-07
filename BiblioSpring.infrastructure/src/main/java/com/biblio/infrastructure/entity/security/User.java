@@ -1,4 +1,4 @@
-package com.biblio.infrastructure.entity;
+package com.biblio.infrastructure.entity.security;
 
 import jakarta.persistence.*;
 import lombok.*;

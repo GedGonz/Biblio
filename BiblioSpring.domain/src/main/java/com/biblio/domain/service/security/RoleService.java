@@ -1,7 +1,7 @@
-package com.biblio.domain.service;
+package com.biblio.domain.service.security;
 
-import com.biblio.domain.model.RoleDto;
-import com.biblio.domain.repository.RoleRepository;
+import com.biblio.domain.model.security.RoleDto;
+import com.biblio.domain.repository.security.RoleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

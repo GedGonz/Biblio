@@ -1,9 +1,7 @@
-package com.biblio.domain.service;
+package com.biblio.domain.service.security;
 
-import com.biblio.domain.model.PermissionDto;
-import com.biblio.domain.model.RoleDto;
-import com.biblio.domain.model.UserDto;
-import com.biblio.domain.repository.UserRepository;
+import com.biblio.domain.model.security.UserDto;
+import com.biblio.domain.repository.security.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,16 +24,9 @@ public class UserService {
     public List<UserDto> getAll(){
         return userRepository.getAll();
     }
-    public List<RoleDto> getRoles(String username) throws Exception {
-        return userRepository.getRoles(username);
-    }
 
-    public UserDto getByUsername(String username) throws Exception {
+    public UserDto getByUsername(String username) {
         return userRepository.getByUsername(username);
-    }
-
-    public List<PermissionDto> getPermission(String username) throws Exception {
-        return userRepository.getPermission(username);
     }
 
 }

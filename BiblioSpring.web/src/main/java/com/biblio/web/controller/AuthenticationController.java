@@ -4,7 +4,6 @@ import com.biblio.web.model.AuthCreateUser;
 import com.biblio.web.model.AuthLoginRequest;
 import com.biblio.web.model.AuthResponse;
 import com.biblio.web.security.UserDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-    @Autowired
-    private UserDetailService userDetailService;
+    private final UserDetailService userDetailService;
+
+    public AuthenticationController(UserDetailService userDetailService){
+        this.userDetailService=userDetailService;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody @Validated AuthLoginRequest userRequest){
