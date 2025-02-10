@@ -12,6 +12,10 @@ java {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
+tasks.named('bootJar') {
+	mainClass = 'com.biblio.web.WebApplication'
+}
+
 
 repositories {
 	mavenCentral()
@@ -28,6 +32,9 @@ dependencies {
 
 	//jwt
 	implementation 'com.auth0:java-jwt:4.5.0'
+	//cloudinary
+	implementation 'com.cloudinary:cloudinary-http5:2.0.0'
+	implementation 'io.github.cdimascio:dotenv-java:2.2.4'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
