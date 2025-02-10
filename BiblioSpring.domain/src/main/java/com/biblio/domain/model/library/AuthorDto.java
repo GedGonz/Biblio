@@ -1,13 +1,13 @@
 package com.biblio.domain.model.library;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class AuthorDto {
 
     private Long id;

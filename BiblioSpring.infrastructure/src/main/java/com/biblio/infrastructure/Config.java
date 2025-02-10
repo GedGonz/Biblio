@@ -9,6 +9,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaRepositories(basePackages = {"com.biblio.infrastructure.adapter","com.biblio.infrastructure.jpaentity"})
 @EntityScan(basePackages = "com.biblio.infrastructure.entity")
-
 public class Config {
 }

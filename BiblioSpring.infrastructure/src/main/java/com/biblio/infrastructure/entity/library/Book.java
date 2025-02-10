@@ -17,14 +17,15 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     public String title;
+    @Column(columnDefinition = "TEXT")
     public String description;
     public String front;
     @Enumerated(EnumType.ORDINAL)
     public GenderEnum gender;
     public LocalDate publishDate;
 
-    @ManyToOne
-    @JoinColumn(name = "id_author", insertable = false,updatable = false)
+    @ManyToOne()
+    @JoinColumn(name = "id_author")
     public Author author;
 
 
