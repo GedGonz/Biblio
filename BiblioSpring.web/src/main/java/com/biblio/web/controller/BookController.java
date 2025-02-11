@@ -5,6 +5,7 @@ import com.biblio.domain.model.library.AuthorDto;
 import com.biblio.domain.model.library.BookDto;
 import com.biblio.domain.service.library.BookService;
 import com.biblio.web.cloudfiles.service.FileStorageService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+@Log4j2
 @RestController
 @RequestMapping("/book")
 public class BookController {
@@ -52,6 +54,7 @@ public class BookController {
 
 
             if(bookService.exist(title)){
+                log.warn("book {} exist", title);
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
 
@@ -71,6 +74,7 @@ public class BookController {
             return new ResponseEntity<>(bookService.save(bookDtoNew), HttpStatus.OK);
 
         } catch (IOException e) {
+            log.error("error was generated ", e);
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

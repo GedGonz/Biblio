@@ -12,6 +12,13 @@ java {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
+
+//se excluye el modulo de logging por defecto para usar log4j2
+configurations.configureEach {
+	exclude module: "spring-boot-starter-logging"
+}
+//
+
 tasks.named('bootJar') {
 	mainClass = 'com.biblio.web.WebApplication'
 }
@@ -36,10 +43,11 @@ dependencies {
 	implementation 'com.cloudinary:cloudinary-http5:2.0.0'
 	implementation 'io.github.cdimascio:dotenv-java:2.2.4'
 
+	//log4j2
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-
-
 
 }
 

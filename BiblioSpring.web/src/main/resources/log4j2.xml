@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+    <Appenders>
+
+        <RollingFile name="biblioFile" fileName="./logs/library.log" filePattern="./logs/$${date:yyyy-MM}/library-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+        </RollingFile>
+
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" />
+        </Console>
+
+    </Appenders>
+
+    <Loggers>
+
+        <Logger  name="com.biblio" level="info" additivity="false">
+            <AppenderRef ref="biblioFile" />
+            <AppenderRef ref="STDOUT" />
+        </Logger>
+
+
+        <!-- Logger global -->
+        <Root level="info">
+            <AppenderRef ref="STDOUT" />
+        </Root>
+
+    </Loggers>
+
+</Configuration>

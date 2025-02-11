@@ -5,10 +5,11 @@ import com.biblio.domain.repository.library.AuthorRepository;
 import com.biblio.infrastructure.jpaentity.library.JpaAuthorCrudRepository;
 import com.biblio.infrastructure.entity.library.Author;
 import com.biblio.infrastructure.mapper.AuthorMapper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Log4j2
 @Repository
 public class AuthorRepositorio implements AuthorRepository {
 
@@ -44,6 +45,8 @@ public class AuthorRepositorio implements AuthorRepository {
     @Override
     public AuthorDto save(AuthorDto authorDto) {
         Author author = jpaAuthorCrudRepository.save(authorMapper.authorDtoToAuthor(authorDto));
+        if(author.getPhoto().isEmpty()) log.info("author is save!");
+        else log.info("photo upload and update author!");
         return authorMapper.authorToAuthorDto(author);
     }
 }

@@ -8,11 +8,13 @@ import com.biblio.infrastructure.jpaentity.library.JpaAuthorCrudRepository;
 import com.biblio.infrastructure.jpaentity.library.JpaBookCrudRepository;
 import com.biblio.infrastructure.mapper.BookMapper;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Log4j2
 @Repository
 public class BookRepositorio implements BookRepository {
 
@@ -46,7 +48,12 @@ public class BookRepositorio implements BookRepository {
           throw new EntityNotFoundException("author not exist!");
 
       book.setAuthor(author.get());
-      return bookMapper.bookToBookDto(jpaBookCrudRepository.save(book));
+      Book bookNew=  jpaBookCrudRepository.save(book);
+
+      if(bookNew.getFront().isEmpty()) log.info("book is save!");
+      else log.info("photo upload and update book!");
+
+      return bookMapper.bookToBookDto(bookNew);
     }
 
     @Override
