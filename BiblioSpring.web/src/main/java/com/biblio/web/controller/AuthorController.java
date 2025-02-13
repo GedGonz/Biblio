@@ -2,8 +2,11 @@ package com.biblio.web.controller;
 
 import com.biblio.domain.model.library.AuthorDto;
 import com.biblio.domain.service.library.AuthorService;
+import com.biblio.infrastructure.adapter.service.ReportService;
 import com.biblio.web.cloudfiles.service.FileStorageService;
+import com.biblio.web.utils.ReponseUtil;
 import lombok.extern.log4j.Log4j2;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +23,14 @@ public class AuthorController {
 
     @Value("${cloudinary.folder.author.name}")
     private String folder;
+
     private final AuthorService authorService;
+    private final ReportService reportService;
 
     private final FileStorageService fileStorageService;
-    public AuthorController(AuthorService authorService, FileStorageService fileStorageService){
+    public AuthorController(AuthorService authorService, ReportService reportService, FileStorageService fileStorageService){
         this.authorService=authorService;
+        this.reportService = reportService;
         this.fileStorageService=fileStorageService;
     }
 
@@ -62,5 +68,12 @@ public class AuthorController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> download() throws IOException, JRException {
+
+        String pathReport = "reports/author/ReportAuthors.jasper";
+        return ReponseUtil.createByteArrayResponse(reportService.generateReport(pathReport));
     }
 }

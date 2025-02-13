@@ -31,6 +31,10 @@ dependencies {
 	// Procesador de anotaciones para MapStruct
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 
+	//jasper report
+	implementation 'net.sf.jasperreports:jasperreports:7.0.1'
+	implementation 'net.sf.jasperreports:jasperreports-pdf:7.0.1'
+
 	implementation project(':BiblioSpring.domain')
 }
 

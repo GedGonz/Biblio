@@ -4,8 +4,11 @@ import com.biblio.domain.enums.GenderEnum;
 import com.biblio.domain.model.library.AuthorDto;
 import com.biblio.domain.model.library.BookDto;
 import com.biblio.domain.service.library.BookService;
+import com.biblio.infrastructure.adapter.service.ReportService;
 import com.biblio.web.cloudfiles.service.FileStorageService;
+import com.biblio.web.utils.ReponseUtil;
 import lombok.extern.log4j.Log4j2;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +29,12 @@ public class BookController {
 
     private final BookService bookService;
     private final FileStorageService fileStorageService;
+    private final ReportService reportService;
 
-    public BookController(BookService bookService, FileStorageService fileStorageService) {
+    public BookController(BookService bookService, FileStorageService fileStorageService, ReportService reportService) {
         this.bookService = bookService;
         this.fileStorageService = fileStorageService;
+        this.reportService = reportService;
     }
 
     @GetMapping("/")
@@ -80,4 +85,12 @@ public class BookController {
         }
 
     }
+
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> download() throws IOException, JRException {
+
+        String pathReport = "reports/book/ReportBooks.jasper";
+        return ReponseUtil.createByteArrayResponse(reportService.generateReport(pathReport));
+    }
+
 }
