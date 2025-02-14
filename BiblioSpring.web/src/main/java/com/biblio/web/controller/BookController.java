@@ -12,6 +12,7 @@ import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +21,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Log4j2
+@PreAuthorize("isAuthenticated()")
 @RestController
 @RequestMapping("/book")
 public class BookController {
