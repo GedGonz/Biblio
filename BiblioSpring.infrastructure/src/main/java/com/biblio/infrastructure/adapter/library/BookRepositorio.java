@@ -50,7 +50,7 @@ public class BookRepositorio implements BookRepository {
       book.setAuthor(author.get());
       Book bookNew=  jpaBookCrudRepository.save(book);
 
-      if(bookNew.getFront().isEmpty()) log.info("book is save!");
+      if(bookNew.getFront()==null) log.info("book is save!");
       else log.info("photo upload and update book!");
 
       return bookMapper.bookToBookDto(bookNew);
@@ -59,5 +59,15 @@ public class BookRepositorio implements BookRepository {
     @Override
     public boolean exist(String title) {
         return jpaBookCrudRepository.findByTitle(title).isPresent();
+    }
+
+    @Override
+    public void delete(Long id) {
+
+        Book book = jpaBookCrudRepository.findById(id).orElse(null);
+        if(book!=null) {
+            jpaBookCrudRepository.delete(book);
+            log.info("book delete!");
+        }
     }
 }

@@ -43,6 +43,12 @@ public class AuthorController {
         return new ResponseEntity<>(authorService.getAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AuthorDto> getFindById(@PathVariable("id") Long id){
+        AuthorDto authorDto =authorService.findById(id);
+        return new ResponseEntity<>(authorDto, HttpStatus.OK);
+    }
+
     @PostMapping("/save")
     public ResponseEntity<AuthorDto> save(@RequestParam("name") String name,
                                           @RequestParam("lastname") String lastname,
@@ -73,7 +79,53 @@ public class AuthorController {
         }
     }
 
-    @GetMapping("/download")
+    @PutMapping("/update/{id}")
+    public ResponseEntity<AuthorDto> update(@PathVariable("id") Long id, @RequestParam("name") String name,
+                                          @RequestParam("lastname") String lastname,
+                                          @RequestParam("birthdate") LocalDate birthdate,
+                                          @RequestParam("photo") MultipartFile photo) {
+        try {
+
+            AuthorDto autorExist = authorService.findById(id);
+
+            if (autorExist == null) {
+                log.warn("author with id {} not exist", id);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+
+            AuthorDto authorDto = AuthorDto.builder()
+                    .id(id)
+                    .name(name)
+                    .lastname(lastname)
+                    .birthdate(birthdate).build();
+
+            AuthorDto authorDtoNew = authorService.update(authorDto);
+
+            if(!photo.isEmpty()){
+                fileStorageService.deleteFile(autorExist.getPhoto(),folder);
+                String urlPhoto = fileStorageService.uploadFile(photo, folder);
+                authorDtoNew.setPhoto(urlPhoto);
+                return new ResponseEntity<>(authorService.save(authorDtoNew), HttpStatus.OK);
+            }
+
+            return new ResponseEntity<>(authorDtoNew, HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error("error was generated ", e);
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) throws Exception {
+        fileStorageService.deleteFile(authorService.findById(id).getPhoto(),folder);
+        authorService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+
+        @GetMapping("/download")
     public ResponseEntity<byte[]> download() throws IOException, JRException {
 
         String pathReport = "reports/author/ReportAuthors.jasper";

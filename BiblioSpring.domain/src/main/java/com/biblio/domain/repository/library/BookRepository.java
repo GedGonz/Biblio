@@ -10,4 +10,5 @@ public interface BookRepository {
     BookDto getFindById(Long id);
     BookDto save(BookDto bookDto);
     boolean exist(String title);
+    void delete(Long id);
 }

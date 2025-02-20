@@ -27,5 +27,8 @@ public class BookService {
     public boolean exist(String title){
         return bookRepository.exist(title);
     }
+    public void delete(Long id){
+        bookRepository.delete(id);
+    }
 
 }

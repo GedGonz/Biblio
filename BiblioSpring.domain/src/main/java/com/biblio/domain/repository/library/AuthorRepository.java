@@ -11,4 +11,5 @@ public interface AuthorRepository {
     AuthorDto getFindById(Long id);
     void saveAll(List<AuthorDto> authorsDto);
     AuthorDto save (AuthorDto authorDto);
+    void delete(Long id);
 }

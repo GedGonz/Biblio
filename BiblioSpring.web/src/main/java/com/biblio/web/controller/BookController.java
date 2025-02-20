@@ -88,6 +88,58 @@ public class BookController {
 
     }
 
+    @PostMapping("/update/{id}")
+    public ResponseEntity<BookDto> update(@PathVariable("id") Long id, @RequestParam("title") String title,
+                                        @RequestParam("description") String description,
+                                        @RequestParam("publishDate") LocalDate publishDate,
+                                        @RequestParam("photo") MultipartFile photo,
+                                        @RequestParam("id_author") Long idAuthor,
+                                        @RequestParam("gender") Integer gender){
+
+        try {
+
+            BookDto bookExist = bookService.getFindById(id);
+            if(bookExist==null){
+                log.warn("book {} not exist ", id);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+
+            GenderEnum genderEnum = GenderEnum.values()[gender];
+
+            BookDto bookDto = BookDto.builder()
+                    .title(title)
+                    .description(description)
+                    .publishDate(publishDate)
+                    .gender(genderEnum)
+                    .author(AuthorDto.builder().id(idAuthor).build())
+                    .build();
+
+            BookDto bookDtoNew = bookService.save(bookDto);
+
+            if(!photo.isEmpty()){
+                fileStorageService.deleteFile(bookExist.getFront(),folder);
+                String urlPhoto = fileStorageService.uploadFile(photo,folder);
+                bookDtoNew.setFront(urlPhoto);
+                return new ResponseEntity<>(bookService.save(bookDtoNew), HttpStatus.OK);
+            }
+
+            return new ResponseEntity<>(bookDtoNew, HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error("error was generated ", e);
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) throws Exception {
+        fileStorageService.deleteFile(bookService.getFindById(id).getFront(),folder);
+        bookService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @GetMapping("/download")
     public ResponseEntity<byte[]> download() throws IOException, JRException {
 

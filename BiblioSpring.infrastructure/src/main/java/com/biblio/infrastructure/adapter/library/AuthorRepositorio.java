@@ -45,8 +45,17 @@ public class AuthorRepositorio implements AuthorRepository {
     @Override
     public AuthorDto save(AuthorDto authorDto) {
         Author author = jpaAuthorCrudRepository.save(authorMapper.authorDtoToAuthor(authorDto));
-        if(author.getPhoto().isEmpty()) log.info("author is save!");
+        if(author.getPhoto()==null) log.info("author is save!");
         else log.info("photo upload and update author!");
         return authorMapper.authorToAuthorDto(author);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Author autor = jpaAuthorCrudRepository.findById(id).orElse(null);
+        if(autor!=null) {
+            jpaAuthorCrudRepository.delete(autor);
+            log.info("author delete!");
+        }
     }
 }
