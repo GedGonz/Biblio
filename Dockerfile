@@ -16,4 +16,4 @@ COPY --from=build /app/BiblioSpring.web/build/libs/BiblioSpring.web-0.0.1-SNAPSH
 
 EXPOSE 8080
 
-ENTRYPOINT java -jar $NAME_APP
+ENTRYPOINT SPRING_PROFILES_ACTIVE=prod java -jar $NAME_APP
