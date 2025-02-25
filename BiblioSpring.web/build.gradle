@@ -5,8 +5,8 @@ plugins {
 }
 
 group = 'com.biblio'
-version = '0.0.1-SNAPSHOT'
-
+version = ''
+def jarName = project.name
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
@@ -54,17 +54,44 @@ dependencies {
 
 }
 
+
+bootJar {
+	exclude '**/application.properties'
+}
+
+task distCopyPropertiFile(type: Copy){
+	from 'src/main/resources/'
+	include '**/*.properties'
+	into 'build/tmp/dist'
+}
+
+task copyLibraries(type: Copy) {
+	from(configurations.runtimeClasspath) {
+		include '*.jar'
+	}
+	into 'build/libs'
+}
+
+task distCopyJarFile(type: Copy){
+	dependsOn bootJar
+	dependsOn copyLibraries
+	from 'build/libs/' + jarName +'.jar'
+	into 'build/tmp/dist'
+}
+
+task distCopyReports(type: Copy) {
+	from 'src/main/resources/reports'
+	into 'build/tmp/dist/reports'
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
-task distCopyConfFiles(type: Copy){
-	from 'src/main/resources/reports'
-	into 'build/libs/reports'
-}
-
 task dist {
-	dependsOn distCopyConfFiles
+	dependsOn copyLibraries
+	dependsOn distCopyJarFile
+	dependsOn distCopyPropertiFile
+	dependsOn distCopyReports
 }
-
 build.dependsOn dist
