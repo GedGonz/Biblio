@@ -4,14 +4,8 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 public class DotenvInitializer {
 
-	static{
+	public static void loadEnv() {
 		Dotenv dotenv = Dotenv.load();
-		System.setProperty("DB_URL", dotenv.get("DB_URL"));
-		System.setProperty("DB_USERNAME", dotenv.get("DB_USERNAME"));
-		System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
-	}
-
-	public static void init(){
-
+		dotenv.entries().forEach(e -> System.setProperty(e.getKey(), e.getValue()));
 	}
 }
