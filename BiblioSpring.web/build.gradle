@@ -57,3 +57,14 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+task distCopyConfFiles(type: Copy){
+	from 'src/main/resources/reports'
+	into 'build/libs/reports'
+}
+
+task dist {
+	dependsOn distCopyConfFiles
+}
+
+build.dependsOn dist
